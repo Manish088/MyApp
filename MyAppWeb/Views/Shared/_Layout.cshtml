@@ -1,0 +1,200 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - EBook</title>
+    <link rel="stylesheet" href="~/MyAppDesign/bootstrap.css"/>
+    @if(User.IsInRole("Admin"))
+    {
+         <link rel="stylesheet" href="~/AdminPanel/Bootstrap.css"/>
+    }
+
+
+     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/MyAppWeb.styles.css" asp-append-version="true" />
+
+    <link href="~/js/datatable/jquery.dataTables.css" rel="stylesheet" />
+    <style>
+
+        .badge {
+  padding-left: 9px;
+  padding-right: 9px;
+  -webkit-border-radius: 9px;
+  -moz-border-radius: 9px;
+  border-radius: 9px;
+}
+
+.label-warning[href],
+.badge-warning[href] {
+  background-color: #c67605;
+}
+#lblCartCount {
+    font-size: 12px;
+    background: #ff0000;
+    color: #fff;
+    padding: 0 5px;
+    vertical-align: top;
+    margin-left: -10px; 
+}
+    </style>
+</head>
+<body>
+    <header>
+
+        @if (!(User.IsInRole("Admin")))
+        {
+
+
+
+            <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#CB4335">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">EBook</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarColor01">
+                        <ul class="navbar-nav me-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Customer" asp-controller="Home" asp-action="Index">
+
+                                    <span class="visually-hidden">(current)</span>
+                                    Home
+                                </a> 
+                            </li>
+                           @* @if (User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="Admin" asp-controller="Category" asp-action="ViewCategory">Category</a>
+
+                                </li>
+                            }
+
+                            @if (User.IsInRole("Admin"))
+                            {
+
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="Admin" asp-controller="Product" asp-action="ViewProduct">Product</a>
+
+                                </li>
+                             }*@
+               <li class="nav-item">
+                  <a class="nav-link" asp-area="Admin" asp-controller="Order" asp-action="AllOrders">Order</a>
+                 
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" asp-area="Customer" asp-controller="Cart" asp-action="Index"><i class="bi bi-cart-plus"></i>
+                        <span class='badge badge-warning' id='lblCartCount'>@ViewData["cartCount"]</span>
+                 
+                  </a>
+                 
+                </li>
+              
+              </ul>
+
+              
+               <partial  name="_LoginPartial" ></partial>
+             
+         
+              @if(User.Identity.IsAuthenticated)
+                {
+                   <form class="d-flex">
+                    <input class="form-control me-sm-2" type="text" placeholder="Search">
+                    <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+                  </form>
+                }
+            </div>
+          </div>
+            </nav>
+
+        }
+        else
+        {
+            
+        
+        
+       
+            
+        
+
+    @* Admin Panle Start *@
+
+    
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+       <a class="navbar-brand" href="#">EBook</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarColor02">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+           <a class="nav-link" asp-area="Customer" asp-controller="Home" asp-action="Index">
+
+                                    <span class="visually-hidden">(current)</span>
+                                    Home
+           </a> 
+        </li>
+        <li class="nav-item">
+                   
+             <a class="nav-link" asp-area="Admin" asp-controller="Category" asp-action="ViewCategory">Category</a>
+
+                                
+        </li>
+        <li class="nav-item">
+             <a class="nav-link" asp-area="Admin" asp-controller="Product" asp-action="ViewProduct">Product</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-area="Admin" asp-controller="Order" asp-action="AllOrders">Order</a>
+        </li>
+       
+      </ul>
+      
+
+      
+      <partial name="_LoginPartial"></partial>
+
+      @if(User.Identity.IsAuthenticated)
+      {
+       <form class="d-flex">
+        <input class="form-control me-sm-2" type="text" placeholder="Search">
+        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+      </form>
+      }
+    
+    </div>
+  </div>
+</nav>
+     }
+
+    </header>
+    <div class="container">
+       
+
+        <main role="main" class="pb-3">
+
+            <partial name="_Notification" />
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+       @* <div class="container">
+            &copy; 2022 - MyAppWeb - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>*@
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="~/js/datatable/jquery.dataTables.js"></script>
+      <script src="https://cdn.tiny.cloud/1/ywcjo1yqo0tcorjfe0dmfs8vk6to0034hlfjefxp0i7yq607/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

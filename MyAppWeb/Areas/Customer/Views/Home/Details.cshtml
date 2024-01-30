@@ -1,0 +1,39 @@
+﻿@model MyApp.Models.Cart
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+<div class="border" style="margin-top:50px">
+
+    <form method="post">
+    <div class="row">
+        <div class="col-4">
+            <img src="@Model.Product.ImageUrl" width="200" height="200"/>
+            <input type="hidden" asp-for="ProductId" />
+        </div>
+         <div class="col-8">
+             <div class="row">
+                    <label asp-for="Product.Name">Name:@Model.Product.Name</label>
+                    <label asp-for="Product.Price">Price:@Model.Product.Price</label>
+                    <label asp-for="Product.CategoryId">Category:@Model.Product.Category.Name</label>
+             </div>
+             <div class="form-control">
+                      <input  id="count" asp-for="Count" class="form-control" min="1"/>
+                      <span asp-validation-for="Count" class="text-danger"></span>
+             </div>
+
+             <div class="mt-4">
+                     <button class="btn btn-success" asp-controller="Home" asp-action="Index">Back To Details</button>
+
+                     <button class="btn btn-dark">Add To Cart</button>
+             </div>
+              
+        </div>
+
+    </div>
+
+</form>
+</div>
+
+

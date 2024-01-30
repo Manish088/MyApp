@@ -1,0 +1,94 @@
+﻿@*@model IEnumerable<Category>*@
+@*@model List<MyApp.Models.Category>*@
+@*@model List<Category>*@
+
+@model MyApp.Models.ViewModels.CategoryVM
+@{
+    ViewData["Title"] = "ViewCategory";
+}
+
+
+
+<div class="Container">
+    <div class="row">
+         <div class="col-6 p-4">
+            <h2 class="text-danger">List of Category</h2>
+        </div>
+        <div class="col-6 p-4 text-end">
+            <a class="btn btn-primary" asp-controller="Category" asp-action="CreateUpdate"><i class="bi bi-plus-circle-dotted"></i>&nbsp;Create Category</a>
+          
+        </div>
+    </div>
+   
+
+</div>
+
+<table class="table table-striped table-border">
+    <thead>
+        <tr>
+            <th>Category Name</th>
+             <th>Order number</th>
+             <th>DateTime</th>
+             <th>Action</th>
+        </tr>
+
+    </thead>
+    <tbody>
+        
+        @if(Model.Category.Id==0)
+        {
+
+        @foreach (var item in Model.Categories)
+        {
+           
+                <tr>
+                <td>@item.Name</td>
+
+                <td>@item.DisplayOrder</td>
+                <td>@item.CreateDateTime</td>
+                <td><a asp-controller="Category" asp-action="CreateUpdate" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i></a>
+                    &nbsp;
+                <a asp-controller="Category" asp-action="Delete" asp-route-id="@item.Id"><i class="bi bi-trash-fill"></i></a>
+                </td>
+                </tr>
+            
+            
+            
+        }
+        }
+        else
+            {
+                
+                <form method="post" asp-controller="Category" asp-action="CreateUpdate">             
+                  <input type="hidden" asp-for="Category.Id">  
+               <tr>
+                 
+                        <td> 
+                            <input type="text"  class="form-control" id="name" asp-for="Category.Name" >
+                            <span asp-validation-for="Category.Name" class="text-danger"></span>
+                      </td>
+
+                        <td>  <input type="number"  class="form-control" id="onum" asp-for="Category.DisplayOrder">
+                                        <span asp-validation-for="Category.DisplayOrder" class="text-danger"></span>
+                        </td>
+                        <td>
+                            <input type="Date"  class="form-control" id="onum" asp-for="Category.CreateDateTime">
+                                        <span asp-validation-for="Category.CreateDateTime" class="text-danger"></span>
+                
+                        </td>
+                        <td>
+                            @*<a asp-controller="Category" asp-action="CreateUpdate"><i class="bi bi-save"></i></a>*@
+                             <button type="submit" class="btn btn-primary" style="margin-top:10px;">Update</button> 
+               
+                        </td>
+                </tr>
+                </form>
+
+            }
+
+
+
+    </tbody>
+</table>
+
+

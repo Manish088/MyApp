@@ -1,0 +1,77 @@
+﻿@model IEnumerable<MyApp.Models.OrderHeader>
+@{
+    ViewData["Title"] = "AllOrders";
+}
+
+
+
+@section scripts{
+    <script>
+
+        $(document).ready(function () {
+            $('#table_id').DataTable();
+        });
+    </script>
+
+    
+}
+
+<div class="Container">
+    <div class="row">
+         <div class="col-6 p-4">
+            <h2 class="text-danger">List of Orders</h2>
+        </div>
+         <div class="col-6 p-4">
+           <a class="text-danger" asp-controller="Order" asp-action="AllOrders" asp-route-status="pending">Pending</a> &nbsp;
+           <a class="text-danger" asp-controller="Order" asp-action="AllOrders" asp-route-status="approved">Approved</a>
+           <a class="text-danger" asp-controller="Order" asp-action="AllOrders" asp-route-status="underprocess">Under Process</a>
+           <a class="text-danger" asp-controller="Order" asp-action="AllOrders" asp-route-status="shipped">Shipped</a>
+           
+        </div>
+       
+      
+       @* <div class="col-6 p-4 text-end">
+            <a class="btn btn-primary" asp-controller="Product" asp-action="CreateUpdate"><i class="bi bi-plus-circle-dotted"></i>&nbsp;Create Category</a>
+        </div>*@
+    </div>
+   
+
+</div>
+
+<table class="table table-border table-striped" id="table_id">
+    <thead>
+        <tr>
+            <th> Name</th>
+             <th>Phone</th>
+             <th>Order Status</th>
+             <th>Order TOtal</th>
+             <th>Action</th>
+        </tr>
+
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Phone</td>
+                <td>@item.OrderStatus</td>
+                <td>@item.OrderTotal</td>
+                <td><a asp-controller="Order" asp-action="OrderDetails" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i></a>
+                  
+               
+             
+                </td>
+            </tr>
+            
+        }
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
